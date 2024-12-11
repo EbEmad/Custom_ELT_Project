@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  source_postgres:
+    image: postgres:latest
+
+    ports:
+      - "5433:5432"
+    networks:
+      - elt_network
+    environment:
+      - POSTGRES_DB: source_db
+      - POSTGRES_USER: postgres
+      - POSTGRES_PASSWORD: root
+    volumes:
+      - ./source_db_init/init.sql:/docker_entrypoint-initdb/init.sql
+
+
+networks:
+  elt_network:
+    driver: bridge
